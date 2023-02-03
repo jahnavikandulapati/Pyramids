@@ -1,0 +1,63 @@
+import sys
+SUM_OF_SQR_6 =  6
+SUM_OF_SQR_13 = 13
+SUM_OF_SQR_30 = 30
+
+def no_of_hipy(num):
+    return int((num * (num + 1) * (2 * num + 1)) // 6)
+
+def no_of_low_evepy(num):
+    if num % 2 == 0 and num > 2:
+        return int((num * (num + 2) * (num + 1)) //  6)
+    return -1
+
+def no_of_low_oddpy(num):
+    if num % 2 != 0 and num > 1:
+        return int((num * (num + 2) * (num + 1)) // 6)
+    return -1
+
+def find_base(bloc):
+    if bloc <= 100: 
+        return SUM_OF_SQR_6
+    elif bloc <= 1000:  
+        return SUM_OF_SQR_13
+    elif bloc <= 10000: 
+        return SUM_OF_SQR_30
+    else:
+        return 0
+
+def iterations(base_num, blc):
+    if base_num != 0:
+        for iterator in range (2, base_num + 2):
+            if no_of_hipy(iterator) > blc:
+                return iterator - 1
+    return 0
+
+def high_or_low_pyramids(block, j):
+    if no_of_hipy(j) <= block and no_of_hipy(j) > 0:
+        l.append(str(j)+"H")
+        block -= no_of_hipy(j)
+    if no_of_low_evepy(j) <= block and no_of_low_evepy(j) > 0:
+        if(block == 4): 
+            return 4
+        l.append(str(j)+"L")
+        block -= LowEvenPy(j)
+    if no_of_low_oddpy(j) <= block and no_of_low_oddpy(j) > 0:
+        l.append(str(j)+"L")
+        block -= no_of_low_oddpy(j)
+    return block
+
+def printPyramid(req,blocks):
+    global l
+    l = []
+    for i in range(req,1,-1):
+        blocks = high_or_low_pyramids(blocks,i)
+    if blocks != 0:
+        return "imposibble"
+    else:
+        return (" ".join(l))
+        
+blocks = int(sys.argv[1])
+number = find_base(blocks)
+req = iterations(number,blocks)
+print(printPyramid(req,blocks))
